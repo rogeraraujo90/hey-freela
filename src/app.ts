@@ -1,13 +1,7 @@
-import express from "express";
+import "reflect-metadata";
+import "dotenv/config";
+import initDatabaseConnection from "./config/database/init-database-connection";
+import startServer from "./config/server/start-server";
 
-const app = express();
-const port = 3000;
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.listen(port, () => {
-  /* eslint-disable no-console */
-  console.log(`Example app listening on port ${port}`);
-});
+initDatabaseConnection();
+startServer();
