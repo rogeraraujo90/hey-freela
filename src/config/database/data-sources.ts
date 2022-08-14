@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm";
+import path from "path";
 
 const AppDataSource = new DataSource({
   type: "mysql",
@@ -9,7 +10,7 @@ const AppDataSource = new DataSource({
   database: "hey_freela",
   synchronize: true,
   logging: true,
-  entities: ["../../models/**.ts"],
+  entities: [path.join(__dirname, "../../models/*.js")],
   subscribers: [],
   migrations: [],
 });

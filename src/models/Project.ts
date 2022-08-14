@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export default class Project {
@@ -11,6 +12,7 @@ export default class Project {
   @Column()
   description: string;
 
+  @Exclude()
   @Column()
   isPublished: boolean;
 }
