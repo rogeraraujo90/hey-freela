@@ -5,6 +5,7 @@
   "main": "built/app.js",
   "scripts": {
     "build": "tsc",
+    "ci": "npm run lint && npm run test",
     "dev": "nodemon",
     "start": "tsc && TS_NODE_BASEURL=./built node -r tsconfig-paths/register ./built/app.js",
     "test": "jest",
