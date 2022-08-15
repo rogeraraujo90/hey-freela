@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Set up MySQL
       run: |
-        /etc/init.d/mysql start
+        sudo systemctl start mysql
         mysql -e 'CREATE DATABASE hey_freela_test;' -u 'root' -p 'root'
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
