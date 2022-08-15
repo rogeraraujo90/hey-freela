@@ -22,7 +22,7 @@ jobs:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE hey_freela_test;' -u root -p root
+        mysql -e 'CREATE DATABASE hey_freela_test;' -u 'root' -p 'root'
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
