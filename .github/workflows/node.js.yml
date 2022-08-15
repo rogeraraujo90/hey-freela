@@ -41,3 +41,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: DATABASE_USERNAME=$DATABASE_USERNAME DATABASE_PASSWORD=$DATABASE_PASSWORD npm run ci
+    - name: Publish code coverage
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: 8e951bc37b7e0c06f99ed7a135d661767a772229af55c64bb44e6eb497b0f277
