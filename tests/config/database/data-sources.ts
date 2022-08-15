@@ -12,7 +12,7 @@ const AppTestsDataSource = new DataSource({
   synchronize: true,
   logging: false,
   migrationsRun: true,
-  entities: [path.join(__dirname, "../../../models/*.ts")],
+  entities: [path.join(__dirname, "../../../src/models/*.ts")],
   subscribers: [],
   migrations: [],
 });

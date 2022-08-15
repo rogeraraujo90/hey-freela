@@ -1,5 +1,7 @@
+import request from "supertest";
 import setupAcceptanceTest from "./utils/setup-acceptance-test";
-import ProjectsRepository from "../repositories/ProjectsRepository";
+import ProjectsRepository from "../src/repositories/ProjectsRepository";
+import server from "../src/config/server/server";
 
 describe("### Projects API ###", () => {
   setupAcceptanceTest();
@@ -29,8 +31,17 @@ describe("### Projects API ###", () => {
   });
 
   test("it lists all active projects", async () => {
-    const result = await ProjectsRepository.listAllPublished();
+    const response = await request(server).get("/projects");
 
-    expect(result.length).toBe(2);
+    expect(response.status).toBe(200);
+
+    const { body } = response;
+
+    expect(body).toHaveLength(2);
+
+    const ids = body.map((project) => project.id);
+
+    expect(ids).toStrictEqual([1, 3]);
+    expect(body[0]).not.toHaveProperty("isPublished");
   });
 });
