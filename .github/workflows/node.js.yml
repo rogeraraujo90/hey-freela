@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: |
+      DATABASE_USERNAME=root
+      DATABASE_PASSWORD=root
     
     services:
       mysql:
@@ -30,11 +33,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: mysql -h 127.0.0.1 --port 3306 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS hey_freela_test;'
+    - run: mysql -h 127.0.0.1 --port 3306 -u $DATABASE_USERNAME -p$DATABASE_PASSWORD -e 'CREATE DATABASE IF NOT EXISTS hey_freela_test;'
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run ci
+    - run: DATABASE_USERNAME=$DATABASE_USERNAME DATABASE_PASSWORD=$DATABASE_PASSWORD npm run ci
