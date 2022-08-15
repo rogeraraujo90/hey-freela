@@ -1,6 +1,6 @@
 import { container } from "tsyringe";
 import { DataSource } from "typeorm";
-import Project from "../models/Project";
+import Project from "@models/Project";
 
 const ProjectsRepository = container
   .resolve<DataSource>("DataSource")

@@ -40,6 +40,18 @@
       "files": ["tests/**"],
       "plugins": ["jest"],
       "extends": ["plugin:jest/recommended"]
+    },
+    {
+      "files": ["jest.config.ts"],
+      "rules": {
+        "import/extensions": [
+          "error",
+          {
+            "json": "always"
+          }
+        ],
+        "import/no-extraneous-dependencies": ["error", {"devDependencies":  true}]
+      }
     }
   ]
 }

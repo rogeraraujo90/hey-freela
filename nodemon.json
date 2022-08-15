@@ -1,5 +1,5 @@
 {
   "watch": ["src"],
   "ext": "ts, json",
-  "exec": "tsc && node ./built/app.js"
+  "exec": "tsc && TS_NODE_BASEURL=./built node -r tsconfig-paths/register ./built/app.js"
 }

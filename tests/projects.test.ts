@@ -1,7 +1,7 @@
 import request from "supertest";
+import server from "@config/server/server";
+import ProjectsRepository from "@repositories/ProjectsRepository";
 import setupAcceptanceTest from "./utils/setup-acceptance-test";
-import ProjectsRepository from "../src/repositories/ProjectsRepository";
-import server from "../src/config/server/server";
 
 describe("### Projects API ###", () => {
   setupAcceptanceTest();

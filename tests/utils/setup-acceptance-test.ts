@@ -1,7 +1,4 @@
 /* eslint-disable no-console */
-import "reflect-metadata";
-import "dotenv/config";
-import "../config/container/data-sources";
 import AppTestsDataSource from "../config/database/data-sources";
 
 async function startDatabaseConnection() {

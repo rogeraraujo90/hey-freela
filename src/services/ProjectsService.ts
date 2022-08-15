@@ -1,4 +1,4 @@
-import ProjectsRepository from "../repositories/ProjectsRepository";
+import ProjectsRepository from "@repositories/ProjectsRepository";
 
 export default class ProjectsService {
   static async listAllPublished() {
