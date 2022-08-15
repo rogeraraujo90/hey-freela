@@ -1,3 +1,7 @@
 # Ignore artifacts:
 built
 coverage
+.github
+.vscode
+*.json
+*.md

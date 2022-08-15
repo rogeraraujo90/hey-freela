@@ -9,7 +9,8 @@
     "dev": "nodemon",
     "start": "tsc && TS_NODE_BASEURL=./built node -r tsconfig-paths/register ./built/app.js",
     "test": "jest",
-    "lint": "eslint './src/**/*.ts' && prettier --write ."
+    "lint": "eslint './src/**/*.ts' && prettier --check .",
+    "lint:fix": "eslint './src/**/*.ts' --fix && prettier --write ."
   },
   "repository": {
     "type": "git",
