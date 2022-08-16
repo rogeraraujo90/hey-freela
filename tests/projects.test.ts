@@ -9,16 +9,19 @@ describe("### Projects API ###", () => {
   beforeEach(async () => {
     await ProjectsRepository.insert([
       {
+        id: "1",
         name: "Project 1",
         description: "Project 1 description",
         isPublished: true,
       },
       {
+        id: "2",
         name: "Project 2",
         description: "Project 2 description",
         isPublished: false,
       },
       {
+        id: "3",
         name: "Project 3",
         description: "Project 3 description",
         isPublished: true,
@@ -41,7 +44,7 @@ describe("### Projects API ###", () => {
 
     const ids = body.map((project) => project.id);
 
-    expect(ids).toStrictEqual([1, 3]);
+    expect(ids).toStrictEqual(["1", "3"]);
     expect(body[0]).not.toHaveProperty("isPublished");
   });
 });

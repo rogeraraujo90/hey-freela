@@ -1,11 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column } from "typeorm";
 import { Exclude } from "class-transformer";
+import BaseModel from "@models/BaseModel";
 
 @Entity()
-export default class Project {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export default class Project extends BaseModel {
   @Column()
   name: string;
 
