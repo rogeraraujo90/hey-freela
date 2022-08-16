@@ -1,8 +1,14 @@
 import BaseModel from "@models/BaseModel";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, Index, ManyToOne } from "typeorm";
+import { Exclude } from "class-transformer";
+import Language from "@models/Language";
 
 @Entity()
+@Index(["githubProfile", "language"], { unique: true })
 export default class ProfessionalProfile extends BaseModel {
+  @Column()
+  description: string;
+
   @Column()
   githubProfile: string;
 
@@ -12,9 +18,11 @@ export default class ProfessionalProfile extends BaseModel {
   @Column({ type: "json" })
   publishedProjects: string[];
 
-  @Column()
-  description: string;
+  @Exclude()
+  @ManyToOne(() => Language, { nullable: false })
+  language: Language;
 
+  @Exclude()
   @Column()
   isPublished: boolean;
 }

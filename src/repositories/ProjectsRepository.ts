@@ -6,7 +6,7 @@ const ProjectsRepository = container
   .resolve<DataSource>("DataSource")
   .getRepository(Project)
   .extend({
-    async listAllPublished() {
+    async getAllPublished() {
       return this.findBy({ isPublished: true });
     },
   });
