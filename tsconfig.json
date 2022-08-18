@@ -17,6 +17,7 @@
       "@models/*": ["./models/*"],
       "@repositories/*": ["./repositories/*"],
       "@services/*": ["./services/*"],
+      "@errors/*": ["./errors/*"],
       "@tests/*": ["../tests/*"]
     }
   },

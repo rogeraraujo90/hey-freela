@@ -5,7 +5,7 @@ import loadFixtures from "./load-fixtures";
 
 setupDatabase();
 
-describe("### Personal Profiles API ###", () => {
+describe("### Professional Profiles API ###", () => {
   loadFixtures();
 
   test("it lists all active professional profiles", async () => {
@@ -47,19 +47,19 @@ describe("### Personal Profiles API ###", () => {
     expect(body).toHaveLength(0);
   });
 
-  test("it returns correct Personal Profile attributes", async () => {
+  test("it returns correct Professional Profile attributes", async () => {
     const response = await request(server).get("/professional-profiles");
-    const [personalProfileAttributes] = response.body;
+    const [professionalProfileAttributes] = response.body;
 
-    expect(personalProfileAttributes).toHaveProperty("createdDate");
-    expect(personalProfileAttributes).toHaveProperty("updatedDate");
+    expect(professionalProfileAttributes).toHaveProperty("createdDate");
+    expect(professionalProfileAttributes).toHaveProperty("updatedDate");
 
-    delete personalProfileAttributes.createdDate;
-    delete personalProfileAttributes.updatedDate;
+    delete professionalProfileAttributes.createdDate;
+    delete professionalProfileAttributes.updatedDate;
 
-    expect(personalProfileAttributes).toStrictEqual({
+    expect(professionalProfileAttributes).toStrictEqual({
       id: "1",
-      description: "Personal profile 1",
+      description: "Professional profile 1",
       githubProfile: "https://www.github.com/profile1",
       technologies: ["java", "php"],
       publishedProjects: [

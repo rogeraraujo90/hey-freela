@@ -6,6 +6,6 @@ export default class ProjectsController {
   static async index(request: Request, response: Response) {
     const allPublishedProjects = await ProjectsService.getAllPublished();
 
-    return response.json(instanceToInstance(allPublishedProjects));
+    response.json(instanceToInstance(allPublishedProjects));
   }
 }

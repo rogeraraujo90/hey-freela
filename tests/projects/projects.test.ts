@@ -38,6 +38,7 @@ describe("### Projects API ###", () => {
       id: "1",
       name: "Project 1",
       description: "Project 1 description",
+      isActive: false,
     });
   });
 });

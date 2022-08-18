@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { instanceToInstance } from "class-transformer";
 import ProfessionalProfileService from "@services/ProfessionalProfileService";
 
@@ -11,6 +11,18 @@ export default class ProfessionalProfileController {
         language: language ? Number(language) : undefined,
       });
 
-    return response.json(instanceToInstance(allPublishedProfiles));
+    response.json(instanceToInstance(allPublishedProfiles));
+  }
+
+  static async find(request: Request, response: Response, next: NextFunction) {
+    try {
+      const profile = await ProfessionalProfileService.getProfile(
+        request.params.id
+      );
+
+      response.json(instanceToInstance(profile));
+    } catch (error) {
+      next(error);
+    }
   }
 }

@@ -1,11 +1,20 @@
-import PersonalProfileRepository from "@repositories/PrefessionalProfileRepository";
 import AppTestsDataSource from "@tests/config/database/data-sources";
 import Language from "@models/Language";
+import User from "@models/User";
+import ProfessionalProfile from "@models/ProfessionalProfile";
 
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
   beforeAll(async () => {
+    const user = entityManager.create(User, {
+      id: "1",
+      email: "john@snow.com",
+      password: "123",
+      firstName: "John",
+      lastName: "Snow",
+      preferredName: "Aegon",
+    });
     const englishLanguage = entityManager.create(Language, {
       id: 1,
       name: "English",
@@ -17,11 +26,11 @@ export default function loadFixtures() {
       globalName: "Portuguese",
     });
 
-    await entityManager.save([englishLanguage, portugueseLanguage]);
-    await PersonalProfileRepository.insert([
+    await entityManager.save([englishLanguage, portugueseLanguage, user]);
+    await entityManager.insert(ProfessionalProfile, [
       {
         id: "1",
-        description: "Personal profile 1",
+        description: "Professional profile 1",
         githubProfile: "https://www.github.com/profile1",
         technologies: ["java", "php"],
         publishedProjects: [
@@ -30,10 +39,11 @@ export default function loadFixtures() {
         ],
         language: englishLanguage,
         isPublished: true,
+        owner: user,
       },
       {
         id: "2",
-        description: "Personal profile 2",
+        description: "Professional profile 2",
         githubProfile: "https://www.github.com/profile2",
         technologies: ["javascript", "node"],
         publishedProjects: [
@@ -42,10 +52,11 @@ export default function loadFixtures() {
         ],
         language: englishLanguage,
         isPublished: false,
+        owner: user,
       },
       {
         id: "3",
-        description: "Personal profile 3",
+        description: "Professional profile 3",
         githubProfile: "https://www.github.com/profile3",
         technologies: ["phyton", "go"],
         publishedProjects: [
@@ -54,16 +65,23 @@ export default function loadFixtures() {
         ],
         language: portugueseLanguage,
         isPublished: true,
+        owner: user,
       },
     ]);
   });
 
   afterAll(async () => {
-    await PersonalProfileRepository.clear();
+    await entityManager.getRepository(ProfessionalProfile).clear();
     await entityManager
       .createQueryBuilder()
       .delete()
       .from(Language)
+      .where("true")
+      .execute();
+    await entityManager
+      .createQueryBuilder()
+      .delete()
+      .from(User)
       .where("true")
       .execute();
   });
