@@ -7,7 +7,7 @@ const customMethods = {
     return this.findBy({ isPublished: true });
   },
 
-  async findByLanguage(language) {
+  async findByLanguage(language: number) {
     return this.findBy({
       "language.id": language,
       isPublished: true,

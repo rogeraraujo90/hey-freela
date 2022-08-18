@@ -2,10 +2,10 @@ import PersonalProfileRepository from "@repositories/PrefessionalProfileReposito
 import AppTestsDataSource from "@tests/config/database/data-sources";
 import Language from "@models/Language";
 
-export default function setupTest() {
+export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const englishLanguage = entityManager.create(Language, {
       id: 1,
       name: "English",
@@ -58,8 +58,13 @@ export default function setupTest() {
     ]);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await PersonalProfileRepository.clear();
-    // await entityManager.clear(Language);
+    await entityManager
+      .createQueryBuilder()
+      .delete()
+      .from(Language)
+      .where("true")
+      .execute();
   });
 }

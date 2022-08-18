@@ -12,7 +12,7 @@ async function startDatabaseConnection() {
   }
 }
 
-export default function setupAcceptanceTest() {
+export default function setupDatabase() {
   beforeAll(async () => startDatabaseConnection());
 
   afterAll(async () => {

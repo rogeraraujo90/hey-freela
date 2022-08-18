@@ -9,6 +9,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
+    "noImplicitAny": true,
     "baseUrl": "./src",
     "paths": {
       "@config/*": ["./config/*"],
