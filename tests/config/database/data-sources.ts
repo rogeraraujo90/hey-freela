@@ -8,11 +8,11 @@ const AppTestsDataSource = new DataSource({
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: "hey_freela_test",
-  dropSchema: true,
+  dropSchema: false,
   synchronize: true,
   logging: false,
   migrationsRun: true,
-  entities: [path.join(__dirname, "../../../src/models/*.ts")],
+  entities: [path.join(__dirname, "../../../src/models/*")],
   subscribers: [],
   migrations: [],
 });
