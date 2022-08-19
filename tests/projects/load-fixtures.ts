@@ -1,6 +1,7 @@
 import User from "@models/User";
 import Project from "@models/Project";
 import AppTestsDataSource from "../config/database/data-sources";
+import emptyTables from "../utils/empty-tables";
 
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
@@ -42,17 +43,6 @@ export default function loadFixtures() {
   });
 
   afterAll(async () => {
-    await entityManager
-      .createQueryBuilder()
-      .delete()
-      .from(Project)
-      .where("true")
-      .execute();
-    await entityManager
-      .createQueryBuilder()
-      .delete()
-      .from(User)
-      .where("true")
-      .execute();
+    await emptyTables([Project, User], entityManager);
   });
 }

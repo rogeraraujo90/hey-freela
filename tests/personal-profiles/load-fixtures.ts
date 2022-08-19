@@ -2,11 +2,26 @@ import AppTestsDataSource from "@tests/config/database/data-sources";
 import Language from "@models/Language";
 import User from "@models/User";
 import ProfessionalProfile from "@models/ProfessionalProfile";
+import Project from "@models/Project";
+import emptyTables from "../utils/empty-tables";
 
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
   beforeAll(async () => {
+    const ownerOfProject = entityManager.create(User, {
+      id: "2",
+      email: "arya@stark.com",
+      password: "123",
+      firstName: "Arya",
+      lastName: "Stark",
+    });
+    const project = entityManager.create(Project, {
+      id: "1",
+      name: "Project os Arya",
+      description: "I am the arya project description",
+      owner: ownerOfProject,
+    });
     const user = entityManager.create(User, {
       id: "1",
       email: "john@snow.com",
@@ -14,6 +29,7 @@ export default function loadFixtures() {
       firstName: "John",
       lastName: "Snow",
       preferredName: "Aegon",
+      workingProjects: [project],
     });
     const englishLanguage = entityManager.create(Language, {
       id: 1,
@@ -26,8 +42,14 @@ export default function loadFixtures() {
       globalName: "Portuguese",
     });
 
-    await entityManager.save([englishLanguage, portugueseLanguage, user]);
-    await entityManager.insert(ProfessionalProfile, [
+    await entityManager.save([
+      englishLanguage,
+      portugueseLanguage,
+      user,
+      ownerOfProject,
+      project,
+    ]);
+    return entityManager.insert(ProfessionalProfile, [
       {
         id: "1",
         description: "Professional profile 1",
@@ -71,18 +93,14 @@ export default function loadFixtures() {
   });
 
   afterAll(async () => {
+    const user = await entityManager
+      .getRepository(User)
+      .findOne({ where: { id: "1" } });
+
+    user.workingProjects = [];
+
+    await entityManager.save(user);
     await entityManager.getRepository(ProfessionalProfile).clear();
-    await entityManager
-      .createQueryBuilder()
-      .delete()
-      .from(Language)
-      .where("true")
-      .execute();
-    await entityManager
-      .createQueryBuilder()
-      .delete()
-      .from(User)
-      .where("true")
-      .execute();
+    await emptyTables([Project, Language, User], entityManager);
   });
 }

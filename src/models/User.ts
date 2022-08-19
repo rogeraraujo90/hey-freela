@@ -6,21 +6,21 @@ import { Exclude } from "class-transformer";
 
 @Entity()
 export default class User extends BaseModel {
-  @Column({ unique: true, nullable: false })
+  @Column({ unique: true })
   email: string;
 
   @Exclude()
-  @Column({ nullable: false })
+  @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
   lastName: string;
 
-  @Column()
-  preferredName: string;
+  @Column({ nullable: true })
+  preferredName: string | undefined;
 
   @OneToMany("Project", (project: Project) => project.owner)
   projects: Project[];

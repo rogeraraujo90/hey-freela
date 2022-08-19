@@ -4,18 +4,18 @@ import AppTestsDataSource from "../config/database/data-sources";
 async function startDatabaseConnection() {
   try {
     await AppTestsDataSource.initialize();
-  } catch (err) {
+    return;
+  } catch (error) {
     console.error(
       "Error during application tests Data Source initialization",
-      err
+      error
     );
+    throw error;
   }
 }
 
 export default function setupDatabase() {
   beforeAll(async () => startDatabaseConnection());
 
-  afterAll(async () => {
-    await AppTestsDataSource.destroy();
-  });
+  afterAll(async () => AppTestsDataSource.destroy());
 }
