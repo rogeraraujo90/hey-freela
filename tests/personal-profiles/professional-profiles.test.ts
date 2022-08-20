@@ -68,4 +68,65 @@ describe("### Professional Profiles API ###", () => {
       ],
     });
   });
+
+  test("it returns a single Professional Profile with the correct attributes", async () => {
+    const { body: professionalProfileData, status } = await request(server).get(
+      "/professional-profiles/1"
+    );
+
+    expect(status).toBe(200);
+    expect(professionalProfileData).toHaveProperty("createdDate");
+    expect(professionalProfileData).toHaveProperty("updatedDate");
+    expect(professionalProfileData).toHaveProperty("owner");
+
+    const { owner: ownerData } = professionalProfileData;
+
+    expect(ownerData).toHaveProperty("createdDate");
+    expect(ownerData).toHaveProperty("updatedDate");
+    expect(ownerData).toHaveProperty("workingProjects");
+
+    const { workingProjects: workingProjectsData } = ownerData;
+
+    expect(workingProjectsData).toHaveLength(1);
+
+    const [workingProjectData] = workingProjectsData;
+
+    expect(workingProjectData).toHaveProperty("createdDate");
+    expect(workingProjectData).toHaveProperty("updatedDate");
+
+    delete professionalProfileData.createdDate;
+    delete professionalProfileData.updatedDate;
+    delete professionalProfileData.owner;
+    delete ownerData.createdDate;
+    delete ownerData.updatedDate;
+    delete ownerData.workingProjects;
+    delete workingProjectData.createdDate;
+    delete workingProjectData.updatedDate;
+
+    expect(professionalProfileData).toStrictEqual({
+      id: "1",
+      description: "Professional profile 1",
+      githubProfile: "https://www.github.com/profile1",
+      technologies: ["java", "php"],
+      publishedProjects: [
+        "https://www.project1.com",
+        "https://www.github.com/profile1/project1",
+      ],
+    });
+
+    expect(ownerData).toStrictEqual({
+      id: "1",
+      email: "john@snow.com",
+      firstName: "John",
+      lastName: "Snow",
+      preferredName: "Aegon",
+    });
+
+    expect(workingProjectData).toStrictEqual({
+      id: "1",
+      name: "Project os Arya",
+      description: "I am the arya project description",
+      isActive: false,
+    });
+  });
 });
