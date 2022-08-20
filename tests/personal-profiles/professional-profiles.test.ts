@@ -129,4 +129,22 @@ describe("### Professional Profiles API ###", () => {
       isActive: false,
     });
   });
+
+  test("it returns a not found error if the requested Professional Profile doesn't exists", async () => {
+    const { body, status } = await request(server).get(
+      "/professional-profiles/99"
+    );
+
+    expect(status).toBe(404);
+    expect(body).toStrictEqual({
+      errors: [
+        {
+          code: "40041",
+          title: "Resource not found",
+          detail:
+            "The requested Professional profile with id 99 was not found.",
+        },
+      ],
+    });
+  });
 });
