@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
-import BaseError from "@errors/BaseError";
+import AppError from "@errors/AppError";
 
 export default function errorHandler(
   error: ErrorRequestHandler,
   req: Request,
   response: Response,
+  // eslint-disable-next-line no-unused-vars
   next: NextFunction
 ) {
-  if (error instanceof BaseError) {
+  if (error instanceof AppError) {
     const { status, code, title, detail } = error;
 
     response.status(status).json({
@@ -20,6 +21,15 @@ export default function errorHandler(
       ],
     });
   } else {
-    next(error);
+    response.status(500).json({
+      errors: [
+        {
+          code: "5001",
+          title: "Unexpected error",
+          detail:
+            "We fall into an error that we didn't expect. We will work to understand and fix it.",
+        },
+      ],
+    });
   }
 }

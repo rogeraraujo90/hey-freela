@@ -13,10 +13,10 @@ export default class ProfessionalProfile extends BaseModel {
   @Column()
   githubProfile: string;
 
-  @Column({ type: "json" })
+  @Column({ type: "json", nullable: true })
   technologies: string[];
 
-  @Column({ type: "json" })
+  @Column({ type: "json", nullable: true })
   publishedProjects: string[];
 
   @Exclude()

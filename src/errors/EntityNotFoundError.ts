@@ -1,6 +1,6 @@
-import BaseError from "./BaseError";
+import AppError from "./AppError";
 
-export default class EntityNotFoundError extends BaseError {
+export default class EntityNotFoundError extends AppError {
   constructor(entityName: string, entityId: string | number) {
     super();
 
