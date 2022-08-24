@@ -4,6 +4,7 @@ import appRoutes from "./routes";
 
 const server = express();
 
+server.disable("x-powered-by");
 server.use(appRoutes);
 server.use(errorHandler);
 
