@@ -1,17 +1,24 @@
 import ProfessionalProfileRepository from "@repositories/PrefessionalProfileRepository";
 import EntityNotFoundError from "@errors/EntityNotFoundError";
 
-interface ListProps {
+interface ListFilters {
   language?: number;
+  technologies?: string[];
 }
 
 export default class ProfessionalProfileService {
-  static async getAllPublished({ language }: ListProps) {
+  static async getAllPublished({ language, technologies }: ListFilters) {
+    const filters: ListFilters = {};
+
     if (language) {
-      return ProfessionalProfileRepository.findByLanguage(language);
+      filters.language = language;
     }
 
-    return ProfessionalProfileRepository.getAllPublished();
+    if (technologies) {
+      filters.technologies = technologies;
+    }
+
+    return ProfessionalProfileRepository.getAllPublished(filters);
   }
 
   static async getProfile(profileId: string) {

@@ -1,8 +1,8 @@
 import request from "supertest";
-import server from "../../src/config/server/server";
-import setupDatabase from "../utils/setup-database";
+import server from "@config/server/server";
+import setupDatabase from "@tests/utils/setup-database";
+import Project from "@models/Project";
 import loadFixtures from "./load-fixtures";
-import Project from "../../src/models/Project";
 
 setupDatabase();
 

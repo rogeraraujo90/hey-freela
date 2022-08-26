@@ -1,3 +1,4 @@
+import ErrorCodes from "@errors/ErrorCodes";
 import AppError from "./AppError";
 
 export default class EntityNotFoundError extends AppError {
@@ -10,7 +11,7 @@ export default class EntityNotFoundError extends AppError {
 
   status = 404;
 
-  code = "40041";
+  code = ErrorCodes.ENTITY_NOT_FOUND_ERROR;
 
   title = "Resource not found";
 

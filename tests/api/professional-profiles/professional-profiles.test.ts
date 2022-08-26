@@ -1,7 +1,7 @@
 import request from "supertest";
 import server from "@config/server/server";
-import setupDatabase from "../utils/setup-database";
-import loadFixtures from "./load-fixtures";
+import setupDatabase from "@tests/utils/setup-database";
+import loadFixtures, { USER_ID_1 } from "./load-fixtures";
 
 setupDatabase();
 
@@ -15,11 +15,11 @@ describe("### Professional Profiles API ###", () => {
 
     const { body } = response;
 
-    expect(body).toHaveLength(2);
+    expect(body).toHaveLength(3);
 
     const ids = body.map(({ id }: { id: string }) => id);
 
-    expect(ids).toStrictEqual(["1", "3"]);
+    expect(ids).toStrictEqual(["1", "3", "4"]);
   });
 
   test("it filters active professional profiles by language", async () => {
@@ -35,9 +35,50 @@ describe("### Professional Profiles API ###", () => {
     expect(body[0].id).toBe("3");
   });
 
+  test("if filters active professional profiles by technologies", async () => {
+    const response = await request(server).get(
+      "/professional-profiles?technologies=java"
+    );
+
+    expect(response.status).toBe(200);
+
+    const { body } = response;
+
+    expect(body).toHaveLength(1);
+    expect(body[0].id).toBe("1");
+  });
+
+  test("if filters active professional profiles by multiple technologies", async () => {
+    const response = await request(server).get(
+      "/professional-profiles?technologies=go&technologies=shopify"
+    );
+
+    expect(response.status).toBe(200);
+
+    const { body } = response;
+
+    expect(body).toHaveLength(2);
+
+    const ids = body.map(({ id }: { id: string }) => id);
+
+    expect(ids).toStrictEqual(["3", "4"]);
+  });
+
   test("it returns an empty array if language doesn't exists", async () => {
     const response = await request(server).get(
       "/professional-profiles?language=3"
+    );
+
+    expect(response.status).toBe(200);
+
+    const { body } = response;
+
+    expect(body).toHaveLength(0);
+  });
+
+  test("it returns an empty array if there is no profile with the technology", async () => {
+    const response = await request(server).get(
+      "/professional-profiles?technologies=moon"
     );
 
     expect(response.status).toBe(200);
@@ -115,7 +156,7 @@ describe("### Professional Profiles API ###", () => {
     });
 
     expect(ownerData).toStrictEqual({
-      id: "1",
+      id: USER_ID_1,
       email: "john@snow.com",
       firstName: "John",
       lastName: "Snow",
@@ -139,7 +180,7 @@ describe("### Professional Profiles API ###", () => {
     expect(body).toStrictEqual({
       errors: [
         {
-          code: "40041",
+          code: "4041",
           title: "Resource not found",
           detail:
             "The requested Professional profile with id 99 was not found.",

@@ -1,7 +1,9 @@
+import ErrorCodes from "@errors/ErrorCodes";
+
 export default abstract class AppError {
   status: number;
 
-  code: string;
+  code: ErrorCodes;
 
   title: string;
 

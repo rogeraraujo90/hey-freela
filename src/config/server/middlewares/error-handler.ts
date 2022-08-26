@@ -5,7 +5,7 @@ export default function errorHandler(
   error: ErrorRequestHandler,
   req: Request,
   response: Response,
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) {
   if (error instanceof AppError) {

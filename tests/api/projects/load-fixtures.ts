@@ -1,14 +1,16 @@
-import User from "@models/User";
-import Project from "@models/Project";
-import AppTestsDataSource from "../config/database/data-sources";
-import emptyTables from "../utils/empty-tables";
+import User from "../../../src/models/User";
+import Project from "../../../src/models/Project";
+import AppTestsDataSource from "../../config/database/data-sources";
+import emptyTables from "../../utils/empty-tables";
 
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
   beforeAll(async () => {
+    await emptyTables([Project, User], entityManager);
+
     const user = entityManager.create(User, {
-      id: "1",
+      id: "1-projects-test",
       email: "john@snow.com",
       password: "123",
       firstName: "John",
@@ -40,9 +42,5 @@ export default function loadFixtures() {
         owner: user,
       },
     ]);
-  });
-
-  afterAll(async () => {
-    await emptyTables([Project, User], entityManager);
   });
 }

@@ -1,17 +1,29 @@
 import { container } from "tsyringe";
-import { DataSource } from "typeorm";
+import { DataSource, Raw } from "typeorm";
 import ProfessionalProfile from "@models/ProfessionalProfile";
 
-const customMethods = {
-  async getAllPublished() {
-    return this.findBy({ isPublished: true });
-  },
+interface GetAllPublishedProps {
+  language?: number;
+  technologies?: string[];
+}
 
-  async findByLanguage(language: number) {
-    return this.findBy({
-      "language.id": language,
+const customMethods = {
+  async getAllPublished({ language, technologies }: GetAllPublishedProps) {
+    const filters: Record<string, unknown> = {
       isPublished: true,
-    });
+    };
+
+    if (language) {
+      filters["language.id"] = language;
+    }
+
+    if (technologies?.length) {
+      filters.technologies = Raw(
+        () => `technologies REGEXP '${technologies.join("|")}'`
+      );
+    }
+
+    return this.find({ where: filters });
   },
 };
 

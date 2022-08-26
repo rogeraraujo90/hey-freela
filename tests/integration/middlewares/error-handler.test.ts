@@ -1,11 +1,12 @@
 import AppError from "@errors/AppError";
 import request from "supertest";
 import server from "@config/server/server";
+import ErrorCodes from "@errors/ErrorCodes";
 
 const GenericAppError = class extends AppError {
   status = 400;
 
-  code = "400x";
+  code = ErrorCodes.PARSE_ERROR;
 
   title = "I am the title";
 
@@ -31,7 +32,7 @@ describe("### Error handler middleware ###", () => {
     expect(response.body).toStrictEqual({
       errors: [
         {
-          code: "400x",
+          code: ErrorCodes.PARSE_ERROR,
           title: "I am the title",
           detail: "I am the detail",
         },

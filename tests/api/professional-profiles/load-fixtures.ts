@@ -1,16 +1,36 @@
-import AppTestsDataSource from "@tests/config/database/data-sources";
-import Language from "@models/Language";
-import User from "@models/User";
-import ProfessionalProfile from "@models/ProfessionalProfile";
-import Project from "@models/Project";
-import emptyTables from "../utils/empty-tables";
+import { EntityManager } from "typeorm";
+import AppTestsDataSource from "../../config/database/data-sources";
+import Language from "../../../src/models/Language";
+import User from "../../../src/models/User";
+import ProfessionalProfile from "../../../src/models/ProfessionalProfile";
+import Project from "../../../src/models/Project";
+import emptyTables from "../../utils/empty-tables";
+
+export const USER_ID_1 = "1-professional-profile-test";
+export const USER_ID_2 = "2-professional-profile-test";
+
+async function ensureClearState(entityManager: EntityManager) {
+  const previousUser = await entityManager
+    .getRepository(User)
+    .findOne({ where: { id: USER_ID_1 } });
+
+  if (previousUser) {
+    previousUser.workingProjects = [];
+
+    await entityManager.save(previousUser);
+  }
+
+  await entityManager.getRepository(ProfessionalProfile).clear();
+  await emptyTables([Project, Language, User], entityManager);
+}
 
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
   beforeAll(async () => {
+    await ensureClearState(entityManager);
     const ownerOfProject = entityManager.create(User, {
-      id: "2",
+      id: USER_ID_2,
       email: "arya@stark.com",
       password: "123",
       firstName: "Arya",
@@ -23,7 +43,7 @@ export default function loadFixtures() {
       owner: ownerOfProject,
     });
     const user = entityManager.create(User, {
-      id: "1",
+      id: USER_ID_1,
       email: "john@snow.com",
       password: "123",
       firstName: "John",
@@ -89,18 +109,18 @@ export default function loadFixtures() {
         isPublished: true,
         owner: user,
       },
+      {
+        id: "4",
+        description: "Professional profile 4",
+        githubProfile: "https://www.github.com/profile4",
+        technologies: ["shopify", "laravel"],
+        publishedProjects: null,
+        language: englishLanguage,
+        isPublished: true,
+        owner: user,
+      },
     ]);
   });
 
-  afterAll(async () => {
-    const user = await entityManager
-      .getRepository(User)
-      .findOne({ where: { id: "1" } });
-
-    user.workingProjects = [];
-
-    await entityManager.save(user);
-    await entityManager.getRepository(ProfessionalProfile).clear();
-    await emptyTables([Project, Language, User], entityManager);
-  });
+  afterAll(async () => {});
 }

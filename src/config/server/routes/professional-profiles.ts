@@ -4,6 +4,6 @@ import ProfessionalProfileController from "@controllers/ProfessionalProfileContr
 const professionalProfilesRoutes = express.Router();
 
 professionalProfilesRoutes.get("/", ProfessionalProfileController.index);
-professionalProfilesRoutes.get("/:id", ProfessionalProfileController.find);
+professionalProfilesRoutes.get("/:id", ProfessionalProfileController.show);
 
 export default professionalProfilesRoutes;
