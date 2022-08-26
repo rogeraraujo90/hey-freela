@@ -7,8 +7,6 @@ export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
   beforeAll(async () => {
-    await emptyTables([Project, User], entityManager);
-
     const user = entityManager.create(User, {
       id: "1-projects-test",
       email: "john@snow.com",
@@ -42,5 +40,9 @@ export default function loadFixtures() {
         owner: user,
       },
     ]);
+  });
+
+  afterAll(async () => {
+    await emptyTables([Project, User], entityManager);
   });
 }

@@ -1,4 +1,3 @@
-import { EntityManager } from "typeorm";
 import AppTestsDataSource from "../../config/database/data-sources";
 import Language from "../../../src/models/Language";
 import User from "../../../src/models/User";
@@ -9,26 +8,10 @@ import emptyTables from "../../utils/empty-tables";
 export const USER_ID_1 = "1-professional-profile-test";
 export const USER_ID_2 = "2-professional-profile-test";
 
-async function ensureClearState(entityManager: EntityManager) {
-  const previousUser = await entityManager
-    .getRepository(User)
-    .findOne({ where: { id: USER_ID_1 } });
-
-  if (previousUser) {
-    previousUser.workingProjects = [];
-
-    await entityManager.save(previousUser);
-  }
-
-  await entityManager.getRepository(ProfessionalProfile).clear();
-  await emptyTables([Project, Language, User], entityManager);
-}
-
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;
 
   beforeAll(async () => {
-    await ensureClearState(entityManager);
     const ownerOfProject = entityManager.create(User, {
       id: USER_ID_2,
       email: "arya@stark.com",
@@ -122,5 +105,18 @@ export default function loadFixtures() {
     ]);
   });
 
-  afterAll(async () => {});
+  afterAll(async () => {
+    const previousUser = await entityManager
+      .getRepository(User)
+      .findOne({ where: { id: USER_ID_1 } });
+
+    if (previousUser) {
+      previousUser.workingProjects = [];
+
+      await entityManager.save(previousUser);
+    }
+
+    await entityManager.getRepository(ProfessionalProfile).clear();
+    await emptyTables([Project, Language, User], entityManager);
+  });
 }
