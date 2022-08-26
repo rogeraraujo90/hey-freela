@@ -7,17 +7,7 @@ interface ListFilters {
 }
 
 export default class ProfessionalProfileService {
-  static async getAllPublished({ language, technologies }: ListFilters) {
-    const filters: ListFilters = {};
-
-    if (language) {
-      filters.language = language;
-    }
-
-    if (technologies) {
-      filters.technologies = technologies;
-    }
-
+  static async getAllPublished(filters: ListFilters) {
     return ProfessionalProfileRepository.getAllPublished(filters);
   }
 

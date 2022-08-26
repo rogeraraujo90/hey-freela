@@ -5,7 +5,7 @@ describe("### parse-optional-array-params utility ###", () => {
   test("it returns an empty array if the param is undefined", () => {
     const result = parseOptionalArrayParam(undefined);
 
-    expect(result).toStrictEqual([]);
+    expect(result).toBe(undefined);
   });
 
   test("it returns an array containing the single string param", () => {
@@ -23,5 +23,6 @@ describe("### parse-optional-array-params utility ###", () => {
 
   test("it throws an Parse error if param type is not expected", () => {
     expect(() => parseOptionalArrayParam(1)).toThrowError(ParseError);
+    expect(() => parseOptionalArrayParam([1, 2])).toThrowError(ParseError);
   });
 });
