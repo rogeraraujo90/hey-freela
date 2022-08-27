@@ -20,6 +20,6 @@ export default class EntityNotFoundError extends AppError {
   entityId: string | number;
 
   get detail() {
-    return `The requested ${this.entityName} with id ${this.entityId} was not found.`;
+    return `The requested ${this.entityName} with id ${this.entityId} doesn't exist or you don't have access to see it.`;
   }
 }

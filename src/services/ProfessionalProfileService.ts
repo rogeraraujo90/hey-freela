@@ -13,7 +13,7 @@ export default class ProfessionalProfileService {
 
   static async getProfile(profileId: string) {
     const professionalProfile = await ProfessionalProfileRepository.findOne({
-      where: { id: profileId },
+      where: { id: profileId, isPublished: true },
       relations: { owner: { workingProjects: true } },
     });
 

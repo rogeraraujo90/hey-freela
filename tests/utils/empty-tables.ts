@@ -6,7 +6,7 @@ import { EntityManager, EntityTarget } from "typeorm";
  * @param {EntityManager} entityManager: The current Data Source's entity manager
  */
 export default async function emptyTables(
-  entityClasses: EntityTarget<any>[],
+  entityClasses: EntityTarget<unknown>[],
   entityManager: EntityManager
 ) {
   for (

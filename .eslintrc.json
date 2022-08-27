@@ -43,7 +43,15 @@
     {
       "files": ["tests/**"],
       "plugins": ["jest"],
-      "extends": ["plugin:jest/recommended"]
+      "extends": ["plugin:jest/recommended"],
+      "rules": {
+        "jest/expect-expect": [
+          "error",
+          {
+            "assertFunctionNames": ["expect", "expectReturnedError"]
+          }
+        ]
+      }
     },
     {
       "files": ["jest.config.ts"],
