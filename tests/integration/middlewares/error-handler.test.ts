@@ -15,7 +15,7 @@ const GenericAppError = class extends AppError {
   detail = "I am the detail";
 };
 
-jest.mock("@services/ProjectsService", () => ({
+jest.mock("@services/ProjectService", () => ({
   getAllPublished: jest
     .fn()
     .mockImplementationOnce(() => {

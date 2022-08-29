@@ -1,8 +1,8 @@
 import express from "express";
-import ProjectsController from "@controllers/ProjectsController";
+import ProjectController from "@controllers/ProjectController";
 
 const projectsRoutes = express.Router();
 
-projectsRoutes.get("/", ProjectsController.index);
+projectsRoutes.get("/", ProjectController.index);
 
 export default projectsRoutes;

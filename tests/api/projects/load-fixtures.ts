@@ -1,7 +1,7 @@
-import User from "../../../src/models/User";
-import Project from "../../../src/models/Project";
-import AppTestsDataSource from "../../config/database/data-sources";
-import emptyTables from "../../utils/empty-tables";
+import User from "@models/User";
+import Project from "@models/Project";
+import AppTestsDataSource from "@tests/config/database/data-sources";
+import emptyTables from "@tests/utils/empty-tables";
 
 export default function loadFixtures() {
   const { manager: entityManager } = AppTestsDataSource;

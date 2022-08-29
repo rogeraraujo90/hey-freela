@@ -1,9 +1,9 @@
-import AppTestsDataSource from "../../config/database/data-sources";
-import Language from "../../../src/models/Language";
-import User from "../../../src/models/User";
-import ProfessionalProfile from "../../../src/models/ProfessionalProfile";
-import Project from "../../../src/models/Project";
-import emptyTables from "../../utils/empty-tables";
+import AppTestsDataSource from "@tests/config/database/data-sources";
+import Language from "@models/Language";
+import User from "@models/User";
+import ProfessionalProfile from "@models/ProfessionalProfile";
+import Project from "@models/Project";
+import emptyTables from "@tests/utils/empty-tables";
 
 export const USER_ID_1 = "1-professional-profile-test";
 export const USER_ID_2 = "2-professional-profile-test";

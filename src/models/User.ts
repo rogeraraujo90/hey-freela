@@ -14,13 +14,13 @@ export default class User extends BaseModel {
   password: string;
 
   @Column({ nullable: true })
-  firstName: string;
+  firstName?: string;
 
   @Column({ nullable: true })
-  lastName: string;
+  lastName?: string;
 
   @Column({ nullable: true })
-  preferredName: string | undefined;
+  preferredName?: string;
 
   @OneToMany("Project", (project: Project) => project.owner)
   projects: Project[];

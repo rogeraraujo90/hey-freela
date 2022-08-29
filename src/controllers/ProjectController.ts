@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { instanceToInstance } from "class-transformer";
-import ProjectsService from "@services/ProjectsService";
+import ProjectService from "@services/ProjectService";
 
-export default class ProjectsController {
+export default class ProjectController {
   static async index(request: Request, response: Response, next: NextFunction) {
     try {
-      const allPublishedProjects = await ProjectsService.getAllPublished();
+      const allPublishedProjects = await ProjectService.getAllPublished();
 
       response.json(instanceToInstance(allPublishedProjects));
     } catch (error) {

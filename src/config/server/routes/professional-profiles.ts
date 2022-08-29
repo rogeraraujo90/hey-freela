@@ -1,7 +1,7 @@
 import express from "express";
 import ProfessionalProfileController from "@controllers/ProfessionalProfileController";
-import listProfessionalProfilesValidations from "../middlewares/professional-profile/list-validations";
-import showValidations from "../middlewares/professional-profile/show-validations";
+import listProfessionalProfilesValidations from "../middlewares/professional-profiles/list-validations";
+import showValidations from "../middlewares/professional-profiles/show-validations";
 
 const professionalProfilesRoutes = express.Router();
 

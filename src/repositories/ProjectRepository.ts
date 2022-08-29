@@ -8,9 +8,9 @@ const customMethods = {
   },
 };
 
-const ProjectsRepository = container
+const ProjectRepository = container
   .resolve<DataSource>("DataSource")
   .getRepository(Project)
   .extend(customMethods);
 
-export default ProjectsRepository;
+export default ProjectRepository;
