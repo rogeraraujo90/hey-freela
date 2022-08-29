@@ -48,7 +48,7 @@
         "jest/expect-expect": [
           "error",
           {
-            "assertFunctionNames": ["expect", "expectReturnedError"]
+            "assertFunctionNames": ["expect", "expectReturnedErrors"]
           }
         ]
       }

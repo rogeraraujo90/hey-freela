@@ -5,7 +5,7 @@ import { isNumericMessage } from "../utils/validations-messages";
 const validations = [
   param("id")
     .isInt({ min: 1, allow_leading_zeroes: false })
-    .withMessage(isNumericMessage("Id"))
+    .withMessage(isNumericMessage("id"))
     .toInt(),
 ];
 

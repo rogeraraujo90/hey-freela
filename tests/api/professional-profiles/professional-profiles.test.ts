@@ -1,8 +1,8 @@
 import request from "supertest";
 import server from "@config/server/server";
 import setupDatabase from "@tests/utils/setup-database";
-import expectReturnedError from "@tests/utils/expects/expect-returned-error";
 import EntityNotFoundError from "@errors/EntityNotFoundError";
+import expectReturnedErrors from "@tests/utils/expects/expect-returned-errors";
 import loadFixtures, { USER_ID_1 } from "./load-fixtures";
 
 setupDatabase();
@@ -39,7 +39,7 @@ describe("### Professional Profiles API ###", () => {
 
   test("if filters active professional profiles by technologies", async () => {
     const response = await request(server).get(
-      "/professional-profiles?technologies=java"
+      "/professional-profiles?technologies=jAvA"
     );
 
     expect(response.status).toBe(200);
@@ -176,8 +176,8 @@ describe("### Professional Profiles API ###", () => {
   test("it returns a not found error if the requested Professional Profile doesn't exists", async () => {
     const response = await request(server).get("/professional-profiles/99");
 
-    expectReturnedError(
-      new EntityNotFoundError("Professional profile", "99"),
+    expectReturnedErrors(
+      [new EntityNotFoundError("Professional profile", "99")],
       response
     );
   });
@@ -185,8 +185,8 @@ describe("### Professional Profiles API ###", () => {
   test("it returns a not found error if the requested Professional Profile is not published", async () => {
     const response = await request(server).get("/professional-profiles/2");
 
-    expectReturnedError(
-      new EntityNotFoundError("Professional profile", "2"),
+    expectReturnedErrors(
+      [new EntityNotFoundError("Professional profile", "2")],
       response
     );
   });
