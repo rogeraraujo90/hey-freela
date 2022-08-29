@@ -1,12 +1,12 @@
-import { Request, Response, NextFunction } from "express";
-import { query, validationResult } from "express-validator";
+import { query } from "express-validator";
 import {
   isAlphaMessage,
   isNumericMessage,
   notEmptyMessage,
 } from "../utils/validations-messages";
+import validationHandler from "../utils/validation-handler";
 
-export default [
+const validations = [
   query("language")
     .optional()
     .isInt({ min: 1, allow_leading_zeroes: false })
@@ -31,13 +31,6 @@ export default [
     .escape()
     .trim()
     .toUpperCase(),
-  (request: Request, response: Response, next: NextFunction) => {
-    const errors = validationResult(request);
-
-    if (!errors.isEmpty()) {
-      response.status(400).json({ errors: errors.array() });
-    } else {
-      next();
-    }
-  },
 ];
+
+export default [...validations, validationHandler];
