@@ -1,11 +1,11 @@
 import ErrorCodes from "@errors/ErrorCodes";
 
 export default abstract class AppError {
-  status: number;
+  abstract status: number;
 
-  code: ErrorCodes;
+  abstract code: ErrorCodes;
 
-  title: string;
+  abstract title: string;
 
   abstract get detail(): string;
 }

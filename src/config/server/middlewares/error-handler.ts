@@ -1,39 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, no-console */
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import AppError from "@errors/AppError";
+import UnexpectedError from "@errors/UnexpectedError";
+import parseAppError from "@config/server/middlewares/utils/parse-app-error";
 
 export default function errorHandler(
   error: ErrorRequestHandler,
   req: Request,
   response: Response,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) {
-  if (error instanceof AppError) {
-    const { status, code, title, detail } = error;
-
-    response.status(status).json({
-      errors: [
-        {
-          code,
-          title,
-          detail,
-        },
-      ],
-    });
-  } else {
-    if (process.env.NODE_ENV === "development") {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-    response.status(500).json({
-      errors: [
-        {
-          code: "5001",
-          title: "Unexpected error",
-          detail:
-            "We fall into an error that we didn't expect. We will work to understand and fix it.",
-        },
-      ],
-    });
+  if (process.env.NODE_ENV === "development") {
+    console.log(error);
   }
+
+  const sentError = error instanceof AppError ? error : new UnexpectedError();
+
+  response.status(sentError.status).json({
+    errors: [parseAppError(sentError)],
+  });
 }
