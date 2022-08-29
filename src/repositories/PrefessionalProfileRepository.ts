@@ -19,7 +19,7 @@ const customMethods = {
 
     if (technologies?.length) {
       filters.technologies = Raw(
-        () => `technologies REGEXP '${technologies.join("|")}'`
+        () => `UPPER(technologies) REGEXP '${technologies.join("|")}'`
       );
     }
 

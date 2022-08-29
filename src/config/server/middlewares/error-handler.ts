@@ -21,6 +21,10 @@ export default function errorHandler(
       ],
     });
   } else {
+    if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
     response.status(500).json({
       errors: [
         {
