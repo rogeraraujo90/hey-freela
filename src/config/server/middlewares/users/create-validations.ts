@@ -1,33 +1,24 @@
 import { body, Meta } from "express-validator";
+import enforceExistsValidation from "../utils/validations/enforce-exists-validation";
 import validationHandler from "../utils/validation-handler";
 import {
   areEqualMessage,
-  existsMessage,
   isEmailMessage,
   isStrongPasswordMessage,
   notEmptyMessage,
 } from "../utils/validations-messages";
 
 const validations = [
-  body("email")
-    .exists()
-    .withMessage(existsMessage("email"))
-    .bail()
+  enforceExistsValidation("email")
     .isEmail()
     .withMessage(isEmailMessage("email"))
     .normalizeEmail()
     .trim(),
-  body("password")
-    .exists()
-    .withMessage(existsMessage("password"))
-    .bail()
+  enforceExistsValidation("password")
     .isStrongPassword()
     .withMessage(isStrongPasswordMessage("password"))
     .trim(),
-  body("passwordConfirmation")
-    .exists()
-    .withMessage(existsMessage("passwordConfirmation"))
-    .bail()
+  enforceExistsValidation("passwordConfirmation")
     .custom((value, { req }: Meta) => req.body.password === value)
     .withMessage(areEqualMessage("passwordConfirmation", "password"))
     .trim(),
