@@ -1,6 +1,8 @@
 import UserRepository from "@repositories/UserRepository";
 import User from "@models/User";
 import DuplicateEntityError from "@errors/DuplicateEntityError";
+import { container } from "tsyringe";
+import IHashProvider from "@providers/hash/IHashProvider";
 
 interface CreateUserProps {
   email: string;
@@ -20,7 +22,12 @@ export default class UserService {
       throw new DuplicateEntityError("User", "email");
     }
 
-    const newUser = Object.assign(new User(), createUserProps);
+    const hasProvider = container.resolve<IHashProvider>("HashProvider");
+    const hashedPassword = await hasProvider.getHash(createUserProps.password);
+    const newUser = Object.assign(new User(), {
+      ...createUserProps,
+      password: hashedPassword,
+    });
 
     await UserRepository.save(newUser);
 

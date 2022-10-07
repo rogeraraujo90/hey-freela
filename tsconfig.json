@@ -18,6 +18,7 @@
       "@repositories/*": ["./repositories/*"],
       "@services/*": ["./services/*"],
       "@errors/*": ["./errors/*"],
+      "@providers/*": ["./providers/*"],
       "@tests/*": ["../tests/*"]
     }
   },
