@@ -1,5 +1,5 @@
-import parseOptionalArrayParam from "../../../../../src/controllers/utils/parse-optional-array-param";
-import ParseError from "../../../../../src/errors/ParseError";
+import parseOptionalArrayParam from "@controllers/utils/parse-optional-array-param";
+import ParseError from "@errors/ParseError";
 
 describe("### parse-optional-array-params utility ###", () => {
   test("it returns an empty array if the param is undefined", () => {
@@ -22,7 +22,7 @@ describe("### parse-optional-array-params utility ###", () => {
   });
 
   test("it throws an Parse error if param type is not expected", () => {
-    expect(() => parseOptionalArrayParam(1)).toThrowError(ParseError);
-    expect(() => parseOptionalArrayParam([1, 2])).toThrowError(ParseError);
+    expect(() => parseOptionalArrayParam(1)).toThrow(ParseError);
+    expect(() => parseOptionalArrayParam([1, 2])).toThrow(ParseError);
   });
 });
